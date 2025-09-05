@@ -81,3 +81,19 @@ test('lists and dropdowns', async({page}) => {
         }
     }
 })
+
+test('tooltips', async({page}) => {
+    await page.getByText('Modal & Overlays').click()
+    await page.getByText('Tooltip').click()
+
+    const toolTipCard = page.locator('nb-card', {hasText: "Tooltip Placements"})
+    await toolTipCard.getByRole('button', {name: "TOP"}).hover()
+    
+    //Freeze browser (debug mode) in developer mode in order to freeze the DOM. 
+    //This will make it possible to see DOM elements that would otherwise dissapear.
+    const tooltip = await page.locator('nb-tooltip').textContent()
+    expect(tooltip).toEqual('This is a tooltip')
+})
+
+
+
